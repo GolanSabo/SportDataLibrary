@@ -14,15 +14,31 @@ namespace SoccerDataLibrary
     {
         static void Main(string[] args)
         {
-            //ISoccerDataService s = SoccerDataFactory.GetSoccerDataService(WebServiceName.FootBallDataService);
-            //Console.WriteLine(s.GetLeague(LeagueNameId.ENGLAND).GetTeamByName("Manchester United FC"));
-            //Console.WriteLine(s.GetLeague(LeagueNameId.ENGLAND).GetTeamByName("Manchester U").GetPlayerByName("Rooney"));
-            //Console.WriteLine(s.GetLeague(LeagueNameId.ENGLAND).GetTeamByName("Manchester United FC").GetPlayerByJerseyNumber(7));
-
-            LeaguesEnumDictionaryCreator led = new LeaguesEnumDictionaryCreator();
-            Dictionary<String,int> leagueList = led.GetLeagueList();
-            foreach(String key in leagueList.Keys)
-                Console.WriteLine(key + "\t" + leagueList[key]);
+            ISoccerDataService s = SoccerDataFactory.GetSoccerDataService(WebServiceName.FootBallDataService);
+            //Dictionary<String,int> leagueList = SecondaryLeaguesDictionaryCreator.GetLeagueList();
+            //foreach (String key in leagueList.Keys)
+            //    Console.WriteLine(key + "\t" + leagueList[key]);
+            //Dictionary<String, int> leagues = s.GetSecondaryLeagues();
+            //League e = s.GetLeague(leagues["Germany2"]);
+            //Dictionary<String, Team> te = s.GetLeague(LeagueNameId.SPAIN).GetTeamByName("FC");
+            //foreach(String key in te.Keys)
+            //{
+            //    Console.WriteLine(te[key].GetPlayerByName("Messi"));
+            //}
+            //League r = s.GetLeague(LeagueNameId.GERMANY);
+            //Console.WriteLine(s.GetLeagueTable(r).ToString());
+            League league=s.GetLeague(LeagueNameId.FRANCE);
+            Dictionary<String,Team>paris= s.GetTeamByName(league, "Paris");
+            Dictionary<String, int> secLeague = s.GetSecondaryLeagues();
+            try
+            {
+                int x=secLeague["Germany2"];
+                Console.WriteLine(x);
+            }
+            catch(KeyNotFoundException)
+            {
+                Console.WriteLine("Yaniv Hagever");
+            }
         }
     }
 }

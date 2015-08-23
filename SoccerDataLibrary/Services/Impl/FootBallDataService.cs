@@ -1,4 +1,8 @@
-﻿using SoccerDataLibrary.Enums;
+﻿using System;
+using System.Collections.Generic;
+using SoccerDataLibrary.Enums;
+using SoccerDataLibrary.Models;
+using SoccerDataLibrary.Utils;
 
 namespace SoccerDataLibrary
 {
@@ -15,9 +19,44 @@ namespace SoccerDataLibrary
             return instance;
         }
 
-        public League GetLeague(LeagueNameId league) {
-
+        public League GetLeague(LeagueNameId league)
+        {
             return new League(league);
+        }
+
+        public League GetLeague(int league)
+        {
+            return new League(league);
+        }
+
+        public Dictionary<String, Team> GetLeagueTeams(League league)
+        {
+            return league.GetLeagueTeams();
+        }
+
+        public Dictionary<string, int> GetSecondaryLeagues()
+        {
+            return SecondaryLeaguesDictionaryCreator.GetLeagueList();
+        }
+
+        public Player GetPlayerByJerseyNumber(Team team, int number)
+        {
+            return team.GetPlayerByJerseyNumber(number);
+        }
+
+        public Player GetPlayerByName(Team team, string name)
+        {
+            return team.GetPlayerByName(name);
+        }
+
+        public Dictionary<String, Team> GetTeamByName(League league,String name)
+        {
+            return league.GetTeamByName(name);
+        }
+
+        public LeagueTable GetLeagueTable(League league)
+        {
+            return league.LeagueTable;
         }
     }
 }

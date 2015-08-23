@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoccerDataLibrary.Exceptions
 {
+    
     class PlayerNotFoundException : Exception
     {
         public PlayerNotFoundException(String msg) : base(msg) { }
@@ -14,8 +15,16 @@ namespace SoccerDataLibrary.Exceptions
     {
         public TeamNotFoundException(String msg) : base(msg) { }
     }
+    class TeamPlayersNotFoundException : Exception
+    {
+        public TeamPlayersNotFoundException(String msg) : base(msg) { }
+    }
     class UnavailableConnectionException : Exception
     {
         public UnavailableConnectionException(String msg) : base(msg) { }
+    }
+    class TooManyRequsts : Exception
+    {
+        public TooManyRequsts(String msg) : base(msg) { }
     }
 }

@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 namespace SoccerDataLibrary.Enums
 {
     /// <summary>
-    /// Popular leagues in europe
+    /// Web services.
     /// </summary>
-    public enum LeagueNameId { GERMANY = 394, ENGLAND = 398, PORTUGAL = 402, HOLLAND = 404, FRANCE = 396 , SPAIN=399};
+    public enum WebServiceName
+    {
+          FootBallDataService
+    };
 }
- 

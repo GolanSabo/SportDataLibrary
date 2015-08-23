@@ -19,55 +19,45 @@ namespace SoccerDataLibrary.Models
         private Dictionary<int, Player> playersByJerseyNumber;
         private Dictionary<String, Player> playersByName;
 
-        public Player this[int index]
-        {
-            private set { playersByJerseyNumber[index] = value; }
-            get { return playersByJerseyNumber[index]; }
-        }
-
-
-        public Player this[String index]
-        {
-            private set { playersByName[index] = value; }
-            get { return playersByName[index]; }
-        }
-
 
         public Team(int id)
         {
+
             teamId = id;
             String stringJson = DataExtractor.GetInstance().GetJsonStringFromUrl(DataType.TEAM, id);
             JObject json = JObject.Parse(stringJson);
             Parse(json);
+
         }
 
 
         public Player GetPlayerByJerseyNumber(int index)
         {
-            if (PlayersByJerseyNumber.ContainsKey(index))
-                return PlayersByJerseyNumber[index];
+            if (playersByJerseyNumber.ContainsKey(index))
+                return playersByJerseyNumber[index];
             else
+               // Console.WriteLine("There is no player with a jersey number : " + index + " in " + name);
                 throw new PlayerNotFoundException("There is no player with a jersey number : " + index + " in " + name);
         }
-
-
+        
         public Player GetPlayerByName(String index)
         {
-            if (PlayersByName.ContainsKey(index))
-                return PlayersByName[index];
+            if (playersByName.ContainsKey(index))
+                return playersByName[index];
             else {
                 Player player = null;
-                foreach (String key in PlayersByName.Keys)
+                foreach (String key in playersByName.Keys)
                 {
                     if (key.Contains(index))
                     {
-                        player = PlayersByName[key];
+                        player = playersByName[key];
                         break;
                     }
                 }
                 if (player != null)
                     return player;
                 else
+                    //Console.WriteLine("There is no player which his name is : " + index + " in " + name);
                     throw new PlayerNotFoundException("There is no player which his name is : " + index + " in " + name);
             }
         }
@@ -75,56 +65,135 @@ namespace SoccerDataLibrary.Models
 
         public void ParsePlayers(int id)
         {
+            
             String stringJson = DataExtractor.GetInstance().GetJsonStringFromUrl(DataType.PLAYER, id);
             JObject json = JObject.Parse(stringJson);
             playersByJerseyNumber = new Dictionary<int, Player>();
             playersByName = new Dictionary<String, Player>();
-
-            var objects = from p in json["players"]
-                            select new
-                            {
-                                id = (int)p["id"],
-                                name = (String)p["name"],
-                                position = (String)p["position"],
-                                jerseyNumber = (int)p["jerseyNumber"],
-                                dateOfBirth = (String)p["dateOfBirth"],
-                                nationality = (String)p["nationality"],
-                                contractUntil = (String)p["contractUntil"],
-                                marketValue = (String)p["marketValue"]
-                            };
-
-            foreach (var item in objects)
+            var count = (int)json["count"];
+            if (count == 0)
+                throw new TeamPlayersNotFoundException("The api doesn't have data about the players of " + Name);
+            try
             {
-                Player player = new Player(item.id, item.name, item.position, item.jerseyNumber,
-                    item.dateOfBirth, item.nationality, item.contractUntil, item.marketValue);
+                var objects = from p in json["players"]
+                              select new
+                              {
+                                  id = (int)p["id"],
+                                  name = (String)p["name"],
+                                  position = (String)p["position"],
+                                  jerseyNumber = (int)p["jerseyNumber"],
+                                  dateOfBirth = (String)p["dateOfBirth"],
+                                  nationality = (String)p["nationality"],
+                                  contractUntil = (String)p["contractUntil"],
+                                  marketValue = (String)p["marketValue"]
+                              };
 
-                PlayersByJerseyNumber.Add(item.jerseyNumber, player);
-                PlayersByName.Add(item.name, player);
+                foreach (var item in objects)
+                {
+                    Player player = new Player(item.id, item.name, item.position, item.jerseyNumber,
+                        item.dateOfBirth, item.nationality, item.contractUntil, item.marketValue);
+
+                    playersByJerseyNumber.Add(item.jerseyNumber, player);
+                    playersByName.Add(item.name, player);
+                }
             }
+            catch (Exception e) { }
         }
 
 
         public void Parse(JObject json)
         {
-            Name = (string)json["name"];
             Code = (string)json["code"];
+            Name = (string)json["name"];
             ShortName = (string)json["shortName"];
-            SquadMarketValue = (string)json["squadMarketValue"];
-            ParsePlayers(teamId);
+            SquadMarketValue = (string)json["squadMarketValue"];          
+            try {
+                ParsePlayers(teamId);
+            }
+            catch (TeamPlayersNotFoundException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
-
+        public String Code
+        {
+            private set
+            {
+                if (value == null)
+                    code = "Unavailabe";
+                code = value;
+            }
+            get
+            {
+                return code;
+            }
+        }
+        public String ShortName
+        {
+            private set
+            {
+                if (value == null)
+                    shortName = "Unavailabe";
+                shortName = value;
+            }
+            get
+            {
+                return shortName;
+            }
+        }
+        public String SquadMarketValue
+        {
+            private set
+            {
+                if (value == null)
+                    squadMarketValue = "Unavailable";
+                else
+                {
+                    squadMarketValue = value.Split(' ')[0];
+                    if(squadMarketValue!="Unavailable")
+                        squadMarketValue += "Euro";
+                }
+            }
+            get
+            {
+                return squadMarketValue;
+            }
+        }
         public String Name { private set { name = value; } get { return name; } }
-        public String Code { private set { code = value; } get { return code; } }
-        public String ShortName { private set { shortName = value; } get { return shortName; } }
-        public String SquadMarketValue { private set { squadMarketValue = value; } get { return squadMarketValue; } }
-        public Dictionary<int, Player> PlayersByJerseyNumber { private set { playersByJerseyNumber = value; } get { return playersByJerseyNumber; } }
-        public Dictionary<String, Player> PlayersByName { private set { playersByName = value; } get { return playersByName; } }
+
 
 
         public override String ToString()
         {
-            return "Name: " + Name + "\nCode: " + Code + "\nShortName: " + ShortName + "\nSquadMarketValue: " + SquadMarketValue + "\n";
+            return "Name: " + Name + "\nCode: " + Code + "\nShortName: " + ShortName + "\nSquadMarketValue: " + SquadMarketValue + " \n";
+        }
+
+        public void PrintPlayers()
+        {
+            Console.WriteLine("Players of: "+Name);
+            foreach (int n in playersByJerseyNumber.Keys)
+            {
+                Console.WriteLine(playersByJerseyNumber[n].ToString());
+            }
+            Console.WriteLine("\n\n");
+        }
+
+
+        public Dictionary<int, Player> PlayersByJerseyNumber
+        {
+            get
+            {
+                return playersByJerseyNumber;
+            }
+        }
+
+        public Dictionary<String, Player> PlayersByName
+        {
+            get
+            {
+                return playersByName;
+            }
         }
     }
 }

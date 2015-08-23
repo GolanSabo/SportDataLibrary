@@ -1,10 +1,16 @@
-﻿namespace SoccerDataLibrary
+﻿using SoccerDataLibrary.Enums;
+
+namespace SoccerDataLibrary
 {
-    public enum WebServiceName { FootBallDataService };
+   
     static class SoccerDataFactory
     {
-   
-
+        /// <summary>
+        /// Singelton.
+        /// Chooses the web service.
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
         public static ISoccerDataService GetSoccerDataService(WebServiceName site)
         {
 

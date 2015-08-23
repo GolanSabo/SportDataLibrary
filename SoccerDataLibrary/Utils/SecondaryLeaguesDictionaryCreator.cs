@@ -6,15 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
+using System.Reflection.Emit;
 
 namespace SoccerDataLibrary.Utils
 {
-    class LeaguesEnumDictionaryCreator
+    static class SecondaryLeaguesDictionaryCreator
     {
-        public LeaguesEnumDictionaryCreator(){}
-
-
-        public Dictionary<String,String> GetLeagueNames ()
+        static public Dictionary<String,String> GetLeagueNames ()
         {
             Dictionary<String, String> leagueNames = new Dictionary<String, String>();
               string url = "http://api.football-data.org/docs/latest/index.html";
@@ -28,7 +27,7 @@ namespace SoccerDataLibrary.Utils
         }
 
 
-        public Dictionary<String, int> GetLeagueIds()
+        static public Dictionary<String, int> GetLeagueIds()
         {
             Dictionary<String, int> leagueIds = new Dictionary<String, int>();
             String stringJson = DataExtractor.GetInstance().GetJsonStringFromUrl(DataType.LEAGUENAMES, 0);
@@ -40,7 +39,7 @@ namespace SoccerDataLibrary.Utils
             return leagueIds;
         }
 
-        public Dictionary<String, int> GetLeagueList()
+        static public Dictionary<String, int> GetLeagueList()
         {
             Dictionary<String, int> leageList = new Dictionary<String, int>();
             Dictionary<String, String>  leagueNames = GetLeagueNames();
@@ -62,5 +61,7 @@ namespace SoccerDataLibrary.Utils
             }
             return leageList;
         }
+
     }
+
 }

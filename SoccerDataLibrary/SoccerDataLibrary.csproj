@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Enums\DataType.cs" />
     <Compile Include="Enums\LeagueNameId.cs" />
+    <Compile Include="Enums\WebServiceName.cs" />
     <Compile Include="Exceptions\SoccerDataServiceExceptions.cs" />
     <Compile Include="Models\League.cs" />
     <Compile Include="Models\LeagueTable.cs" />
@@ -66,7 +67,7 @@
     <Compile Include="Services\Impl\FootBallDataService.cs" />
     <Compile Include="SoccerDataFactory.cs" />
     <Compile Include="Utils\DataExtractor.cs" />
-    <Compile Include="Utils\LeaguesEnumDictionaryCreator.cs" />
+    <Compile Include="Utils\SecondaryLeaguesDictionaryCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

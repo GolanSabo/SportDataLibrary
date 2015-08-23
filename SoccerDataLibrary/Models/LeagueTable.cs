@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Newtonsoft.Json.Linq;
 
 namespace SoccerDataLibrary.Models
@@ -10,20 +11,7 @@ namespace SoccerDataLibrary.Models
     {
         private Dictionary<String, TeamLeagueTable> leagueTable;
 
-        public TeamLeagueTable this[String index]
-        {
-            private set
-            {
-                leagueTable[index] = value;
-            }
-            get
-            {
-                return leagueTable[index];
-            }
-        }
-
         public LeagueTable(JObject json) {
-
             Parse(json);
         }
 
@@ -45,14 +33,20 @@ namespace SoccerDataLibrary.Models
 
             foreach (var item in obj)
             {
-                //leagueTable.Add(item.name, new TeamLeagueTable(item.position, item.playedGames, item.points,
-                //                item.goalDifference, item.goalsAgainst, item.goals));
                 leagueTable[item.name]= new TeamLeagueTable(item.position, item.playedGames, item.points,
                 item.goalDifference, item.goalsAgainst, item.goals);
 
             }
         }
-
-        public Dictionary<String, TeamLeagueTable> LeagueTabl { private set { leagueTable = value; } get { return leagueTable; } }
+        override public String ToString()
+        {
+            StringBuilder str = new StringBuilder();
+            foreach(String key in leagueTable.Keys)
+            {
+                str.Append(leagueTable[key].ToString() + "\n");
+            }
+            return str.ToString();
+        }
+        //public Dictionary<String, TeamLeagueTable> LeagueTabl { private set { leagueTable = value; } get { return leagueTable; } }
     }
 }
