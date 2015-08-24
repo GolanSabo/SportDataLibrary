@@ -60,12 +60,12 @@
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\TeamLeagueTable.cs" />
-    <Compile Include="Parseable.cs" />
+    <Compile Include="Services\Contract\Parseable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Contract\ISoccerDataService.cs" />
     <Compile Include="Services\Impl\FootBallDataService.cs" />
-    <Compile Include="SoccerDataFactory.cs" />
+    <Compile Include="Services\Impl\SoccerDataFactory.cs" />
     <Compile Include="Utils\DataExtractor.cs" />
     <Compile Include="Utils\SecondaryLeaguesDictionaryCreator.cs" />
   </ItemGroup>
