@@ -56,7 +56,10 @@ namespace SoccerDataLibrary.Models
             }
             return str.ToString();
         }
-        
+        /// <summary>
+        /// Property that holds the league table
+        /// by club name and its league table details
+        /// </summary>
         public Dictionary<String, TeamLeagueTable> LeagueTabl
         {
             private set
