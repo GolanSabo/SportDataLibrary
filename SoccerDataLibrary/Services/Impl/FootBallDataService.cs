@@ -8,8 +8,13 @@ namespace SoccerDataLibrary
 {
     class FootBallDataService : ISoccerDataService
     {
+
         private static FootBallDataService instance = null;
         private FootBallDataService() { }
+        /// <summary>
+        /// initiates FootBallDataSevice if needed or gives a referance to it if
+        /// its already exsists. 
+        /// </summary>
         public static FootBallDataService GetInstance()
         {
             if (instance == null)
@@ -57,6 +62,11 @@ namespace SoccerDataLibrary
         public LeagueTable GetLeagueTable(League league)
         {
             return league.LeagueTable;
+        }
+
+        public void PrintPlayers(Team team)
+        {
+            team.PrintPlayers();
         }
     }
 }

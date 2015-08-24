@@ -11,8 +11,15 @@ using System.Reflection.Emit;
 
 namespace SoccerDataLibrary.Utils
 {
+    /// <summary>
+    /// static class for parsing the less relevant leagues of europe
+    /// </summary>
     static class SecondaryLeaguesDictionaryCreator
     {
+        /// <summary>
+        /// Scraping the secondary league names of the API web site
+        /// </summary>
+        /// <returns></returns>
         static public Dictionary<String,String> GetLeagueNames ()
         {
             Dictionary<String, String> leagueNames = new Dictionary<String, String>();
@@ -26,7 +33,10 @@ namespace SoccerDataLibrary.Utils
             return leagueNames;
         }
 
-
+        /// <summary>
+        /// Scraping the secondary league IDs of the API web site
+        /// </summary>
+        /// <returns></returns>
         static public Dictionary<String, int> GetLeagueIds()
         {
             Dictionary<String, int> leagueIds = new Dictionary<String, int>();
@@ -38,7 +48,11 @@ namespace SoccerDataLibrary.Utils
             }
             return leagueIds;
         }
-
+        /// <summary>
+        /// Using GetLeagueIds and GetLeagueNames in order to build a dictionary of league name and thier
+        /// id in API
+        /// </summary>
+        /// <returns></returns>
         static public Dictionary<String, int> GetLeagueList()
         {
             Dictionary<String, int> leageList = new Dictionary<String, int>();

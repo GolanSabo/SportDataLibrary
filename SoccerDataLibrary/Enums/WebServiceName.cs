@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoccerDataLibrary.Enums
 {
-    /// <summary>
-    /// Web services.
-    /// </summary>
+    /// <summary>Web services. </summary>
     public enum WebServiceName
     {
           FootBallDataService

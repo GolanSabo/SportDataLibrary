@@ -8,6 +8,9 @@ using SoccerDataLibrary.Exceptions;
 
 namespace SoccerDataLibrary
 {
+    /// <summary>
+    /// Class representing a europian soccer league
+    /// </summary>
     class League : Parseable
     {
 
@@ -15,11 +18,19 @@ namespace SoccerDataLibrary
         private Dictionary<String, int> teamsId;
         private LeagueTable leagueTable;
 
-
+        /// <summary>
+        /// C'tor that gets the LeagueNameId enum and make a League instance of the
+        /// asked country
+        /// </summary>
+        /// <param name="league"></param>
         public League(LeagueNameId league):this((int)league)
         {
         }
-
+        /// <summary>
+        /// C'tor that gets the id (int) and make a League instance of the
+        /// asked country
+        /// </summary>
+        /// <param name="league"></param>
         public League(int league)
         {
             String stringJson = DataExtractor.GetInstance().GetJsonStringFromUrl(DataType.LEAGUE,league);
@@ -28,7 +39,10 @@ namespace SoccerDataLibrary
             leagueTable = new LeagueTable(json);
         }
 
-
+        /// <summary>
+        /// Get a Dictionary holding all teams in a specific league
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<String,Team> GetLeagueTeams()
         {
             Dictionary<String, Team> teams = new Dictionary<string, Team>();
@@ -38,7 +52,13 @@ namespace SoccerDataLibrary
             }
             return teams;
         }
-
+        /// <summary>
+        /// Get a Dictionary holding all teams that thier name contain
+        /// the string you sent.
+        /// </summary>
+        /// <exception cref="SoccerDataServiceExceptions.TeamNotFoundException">Thrown when team can't be found int the API</exception>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public Dictionary<String, Team> GetTeamByName(String name)
         {
 
@@ -51,18 +71,23 @@ namespace SoccerDataLibrary
                 }
             }
             if (id.Count == 0)
-                throw new TeamNotFoundException("The team you asked for isn't in the " + LeagueName + " league");
+                throw new TeamNotFoundException("The team you asked for isn't in the " + LeagueName + " league\n");
 
             Dictionary<String,Team> teams = new Dictionary<string, Team>();
             foreach (int t in id)
-                teams[name]=new Team(t);
-
+            {
+                Team tmp= new Team(t);
+                teams[tmp.Name] = tmp;
+            }
             return teams;
         }
-
+        /// <summary>
+        /// parse json object.
+        /// </summary>
+        /// <param name="json"></param>
         public void Parse(JObject json){
 
-            LeagueName = (string)json["leagueCaption"];
+            LeagueName = (string)json["caption"];
             teamsId = new Dictionary<string, int>();
             var obj = from p in json["standing"]
                       select new {url = (String)p["_links"]["team"]["href"],
@@ -74,6 +99,7 @@ namespace SoccerDataLibrary
                 teamsId[item.name] = id;
             }
         }
+        /// <summary>Property that indicates the league name </summary>
         public String LeagueName {
             get
             {
@@ -84,7 +110,7 @@ namespace SoccerDataLibrary
                 leagueName = value;
             }
         }
-
+        /// <summary>Property that league table</summary>
         public LeagueTable LeagueTable {
             get
             {

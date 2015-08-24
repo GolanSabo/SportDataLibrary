@@ -6,16 +6,21 @@ using Newtonsoft.Json.Linq;
 
 namespace SoccerDataLibrary.Models
 {
-    
+    /// <summary>
+    /// Class representing Table of a specific league
+    /// </summary>
     class LeagueTable : Parseable
     {
         private Dictionary<String, TeamLeagueTable> leagueTable;
-
+        /// <summary>
+        /// C'tor.
+        /// </summary>
+        /// <param name="json"></param>
         public LeagueTable(JObject json) {
             Parse(json);
         }
 
-
+        ///<summary>Parse json object to LeagueTable class.</summary> 
         public void Parse(JObject json)
         {
             leagueTable = new Dictionary<String, TeamLeagueTable>();
@@ -38,15 +43,30 @@ namespace SoccerDataLibrary.Models
 
             }
         }
+        /// <summary>
+        /// Turns the table into string ready for print.
+        /// </summary>
+        /// <returns></returns>
         override public String ToString()
         {
             StringBuilder str = new StringBuilder();
             foreach(String key in leagueTable.Keys)
             {
-                str.Append(leagueTable[key].ToString() + "\n");
+                str.Append(key+"\n"+leagueTable[key].ToString() + "\n");
             }
             return str.ToString();
         }
-        //public Dictionary<String, TeamLeagueTable> LeagueTabl { private set { leagueTable = value; } get { return leagueTable; } }
+        
+        public Dictionary<String, TeamLeagueTable> LeagueTabl
+        {
+            private set
+            {
+                leagueTable = value;
+            }
+            get
+            {
+                return leagueTable;
+            }
+        }
     }
 }

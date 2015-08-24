@@ -50,7 +50,7 @@ namespace SoccerDataLibrary
         /// <returns></returns>
         Player GetPlayerByName(Team team,String name);
         /// <summary>
-        /// Get a player by his jersey number.
+        /// Get a player by his shirt number.
         /// </summary>
         /// <param name="team"></param>
         /// <param name="number"></param>
@@ -62,5 +62,11 @@ namespace SoccerDataLibrary
         /// <param name="league"></param>
         /// <returns></returns>
         LeagueTable GetLeagueTable(League league);
+        /// <summary>
+        /// prints all the players of a club
+        /// </summary>
+        /// <param name="team"></param>
+        void PrintPlayers(Team team);
+
     }
 }

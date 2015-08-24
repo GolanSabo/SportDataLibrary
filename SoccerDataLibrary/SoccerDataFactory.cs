@@ -6,7 +6,6 @@ namespace SoccerDataLibrary
     static class SoccerDataFactory
     {
         /// <summary>
-        /// Singelton.
         /// Chooses the web service.
         /// </summary>
         /// <param name="site"></param>
