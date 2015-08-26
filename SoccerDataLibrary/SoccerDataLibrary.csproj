@@ -41,6 +41,10 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -66,6 +70,14 @@
     <Compile Include="Services\Contract\ISoccerDataService.cs" />
     <Compile Include="Services\Impl\FootBallDataService.cs" />
     <Compile Include="Services\Impl\SoccerDataFactory.cs" />
+    <Compile Include="Test\Models\LeagueTableTests.cs" />
+    <Compile Include="Test\Models\LeagueTests.cs" />
+    <Compile Include="Test\Models\PlayerTest.cs" />
+    <Compile Include="Test\Models\TeamLeagueTableTests.cs" />
+    <Compile Include="Test\Models\TeamTests.cs" />
+    <Compile Include="Test\Services\SoccerDataFactoryTests.cs" />
+    <Compile Include="Test\Utils\DataExtractorTests.cs" />
+    <Compile Include="Test\Utils\SecondaryLeaguesDictionaryCreatorTests.cs" />
     <Compile Include="Utils\DataExtractor.cs" />
     <Compile Include="Utils\SecondaryLeaguesDictionaryCreator.cs" />
   </ItemGroup>
